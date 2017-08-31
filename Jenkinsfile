@@ -2,6 +2,7 @@ pipeline {
   agent any
 
   environment {
+    NEXUS_URL = credentials('nexus_url')
     NEXUS = credentials('nexus')
   }
 
@@ -22,19 +23,19 @@ pipeline {
     }
     stage('Nexus login') {
         steps {
-            sh "sudo docker login localhost:5000 -u $NEXUS_USR -p $NEXUS_PSW"
+            sh "sudo docker login $NEXUS_URL -u $NEXUS_USR -p $NEXUS_PSW"
         }
     }
     stage('Docker build') {
         steps {
             sh 'env'
-            sh "sudo docker build -t localhost:5000/${env.JOB_NAME}:${env.BUILD_NUMBER}.0 ."
+            sh "sudo docker build -t $NEXUS_URL/${env.JOB_NAME}:${env.BUILD_NUMBER}.0 ."
         }
     }
     stage('Docker push') {
         steps {
             sh 'env'
-            sh "sudo docker push localhost:5000/${env.JOB_NAME}:${env.BUILD_NUMBER}.0"
+            sh "sudo docker push $NEXUS_URL/${env.JOB_NAME}:${env.BUILD_NUMBER}.0"
         }
     }
     stage ('Clean') {
