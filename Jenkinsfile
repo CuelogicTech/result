@@ -1,5 +1,10 @@
 pipeline { 
   agent any
+
+  environment {
+    NEXUS = credentials('nexus')
+  }
+
   tools {
     nodejs 'nodejs-6.x'
   }
@@ -17,7 +22,7 @@ pipeline {
     }
     stage('Nexus login') {
         steps {
-            sh 'sudo docker login localhost:5000 -u admin -p admin123'
+            sh "sudo docker login localhost:5000 -u $NEXUS_USR -p $NEXUS_PSW"
         }
     }
     stage('Docker build') {
