@@ -4,6 +4,7 @@ pipeline {
   environment {
     NEXUS_URL = credentials('nexus_url')
     NEXUS = credentials('nexus')
+    NEXUS_HOST = credentials('nexus_host')
   }
 
   tools {
