@@ -29,13 +29,13 @@ pipeline {
     stage('Docker build') {
         steps {
             sh 'env'
-            sh "sudo docker build -t $NEXUS_URL/${env.JOB_NAME}:${env.BUILD_NUMBER}.0 ."
+            sh "sudo docker build -t $NEXUS_HOST/${env.JOB_NAME}:${env.BUILD_NUMBER}.0 ."
         }
     }
     stage('Docker push') {
         steps {
             sh 'env'
-            sh "sudo docker push $NEXUS_URL/${env.JOB_NAME}:${env.BUILD_NUMBER}.0"
+            sh "sudo docker push $NEXUS_HOST/${env.JOB_NAME}:${env.BUILD_NUMBER}.0"
         }
     }
     stage ('Clean') {
