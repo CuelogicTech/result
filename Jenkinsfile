@@ -25,14 +25,14 @@ pipeline {
     stage('Docker build') {
         steps {
             sh 'env'
-            sh "sudo docker build -t cueops/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER} ."
+          sh "sudo docker build -t ${env.DOCKERHUB_REPO}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER} ."
         }
     }
     stage('Docker push') {
         steps {
             sh 'env'
-            sh "sudo docker push cueops/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
-            sh "curl -k http://34.200.248.216/api/v1/webhooks/codecommit -d '{"name": ${env.JOB_NAME}, "build": { "branch":${env.GIT_BRANCH}, "number":${env.BUILD_NUMBER}, "status" :"SUCCESS"} }' -H 'Content-Type: application/json' -H 'st2-api-key: OGVhYWExZDU1NDg3NDZmZGMyOTY5MTgxMDNjNzNkNjEzZTFlY2E4YTIxNTViOWYwMmZhZWM1NTgwYTE0Zjc3YQ'"
+            sh "sudo docker push ${env.DOCKERHUB_REPO}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
+          sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"status\": \"SUCCESS\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.API_KEY}'"
         }
     }
   }
