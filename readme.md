@@ -1,3 +1,2 @@
 Test-dummy
 with logging
-
