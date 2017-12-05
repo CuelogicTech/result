@@ -25,7 +25,7 @@ pipeline {
     }
     stage('Dockerhub login') {
         steps {
-            sh "sudo docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW"
+            sh "sudo docker login -u $DOCKERHUB_USRs -p $DOCKERHUB_PSW"
         }
     }
     stage('Docker build') {
