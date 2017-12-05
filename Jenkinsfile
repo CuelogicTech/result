@@ -7,6 +7,12 @@ pipeline {
   }
   
   stages {
+    stage ('Notify CI start') {
+      steps {
+        sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"phase\": \"STARTED\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.ST2_API_KEY}'"
+      }
+    }
+    
     stage ('Checkout Code') {
       steps {
         checkout scm
