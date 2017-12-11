@@ -15,7 +15,7 @@ pipeline {
     
     stage ('Checkout Code') {
       steps {
-        checkout scm
+        checkout scm: [$class: 'GitSCM', extensions: [[$class: 'CheckoutOption', timeout: 120, shallow: true]]]
       }
     }
     stage ('Build app') {
