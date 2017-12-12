@@ -12,13 +12,14 @@ pipeline {
         sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"phase\": \"STARTED\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.ST2_API_KEY}'"
       }
     }
-    
-    stage ('Checkout Code') {
-      steps {
-        sh "git config --global core.compression 0"
-        checkout scm: [$class: 'GitSCM', extensions: [[$class: 'CheckoutOption', timeout: 120, shallow: true]]]
-      }
-    }
+//    stage ('Checkout Code') {
+//      steps {
+//        sh "export GIT_TRACE=1"
+//        checkout scm
+//        sh "git config --global core.compression 0"
+//        checkout scm: [$class: 'GitSCM', extensions: [[$class: 'CheckoutOption', timeout: 240, shallow: true]]]
+//      }
+//    }
     stage ('Build app') {
       steps {
         sh "echo Add build commands here"
