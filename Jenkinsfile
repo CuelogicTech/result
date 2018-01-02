@@ -49,5 +49,4 @@ pipeline {
             deleteDir() /* clean up our workspace */
      }
   }
-}
 
