@@ -12,16 +12,11 @@ pipeline {
         sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"phase\": \"STARTED\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.ST2_API_KEY}'"
       }
     }
-    stage ('Sonar-Analysis') {
-      steps {
-        echo "sonar start"
-        script {
-            withSonarQubeEnv('My SonarQube Server') {
-              sh "${scannerHome}/bin/sonar-scanner"
-            }
-          }
+    stage('SonarQube analysis') { 
+        withSonarQubeEnv('sonar-test') { 
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
         }
-      }
+    }
     stage('Dockerhub login') {
         steps {
             sh "sudo docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW"
