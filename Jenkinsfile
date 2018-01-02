@@ -16,12 +16,13 @@ pipeline {
       steps {
         echo "sonar start"
         script {
-        }
-        withSonarQubeEnv('My SonarQube Server') {
-        sh "${scannerHome}/bin/sonar-scanner"
+            def scannerHome = tool 'SonarQube Scanner 2.8';
+            withSonarQubeEnv('My SonarQube Server') {
+              sh "${scannerHome}/bin/sonar-scanner"
             }
           }
         }
+      }
     stage('Dockerhub login') {
         steps {
             sh "sudo docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW"
