@@ -4,7 +4,6 @@ pipeline {
   environment {
     DOCKERHUB = credentials('dockerhub')
     GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-    scannerHome = tool 'SonarQube Scanner 2.8'
   }
   
   stages {
@@ -16,6 +15,8 @@ pipeline {
     stage ('Sonar-Analysis') {
       steps {
         echo "sonar start"
+        script {
+        }
         withSonarQubeEnv('My SonarQube Server') {
         sh "${scannerHome}/bin/sonar-scanner"
             }
