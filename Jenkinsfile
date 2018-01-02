@@ -7,11 +7,11 @@ pipeline {
   }
   
   stages {
-    stage ('Notify CI start') {
-      steps {
-        sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"phase\": \"STARTED\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.ST2_API_KEY}'"
-      }
-    }
+    //stage ('Notify CI start') {
+    //  steps {
+    //    sh "curl -k http://${env.ST2_URL}/api/v1/webhooks/codecommit -d '{\"name\": \"${env.JOB_NAME}\", \"build\": {\"branch\": \"${env.GIT_BRANCH}\", \"phase\": \"STARTED\", \"number\": \"${env.BUILD_ID}\"}}' -H 'Content-Type: application/json' -H 'st2-api-key: ${env.ST2_API_KEY}'"
+   //   }
+  //  }
     stage('Submit the sources to SonarQube') { 
     environment { 
         SONAR_SCANNER_OPTS = "-Xmx2G -Xms256m" 
@@ -30,12 +30,12 @@ pipeline {
 //            sh "sudo docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW"
 //        }
 //    }
-    stage('Docker build') {
-        steps {
-            sh 'env'
-          sh "sudo docker build -t ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER} ."
-        }
-    }
+    //stage('Docker build') {
+    //    steps {
+    //        sh 'env'
+    //      sh "sudo docker build -t ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER} ."
+    //    }
+   // }
 //    stage('Docker push') {
 //        steps {
 //            sh 'env'
@@ -47,7 +47,7 @@ pipeline {
   post {
         always {
             echo 'Cleaning the workspace & docker image'
-          sh "sudo docker rmi ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
+//          sh "sudo docker rmi ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
             deleteDir() /* clean up our workspace */
      }
   }
