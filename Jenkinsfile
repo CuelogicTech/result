@@ -6,20 +6,18 @@ pipeline {
   }
   
   stages {
-    stage ("SonarQube analysis") {
-     steps {
+    stage ('SonarQube analysis') {
+      steps {
         script {
-          	def sonarqubeScannerHome = tool 'SonarScanner';
-          	}
-        withEnv(["PATH=/usr/bin: ..."]) {
-        withSonarQubeEnv("Sonar") {
-        sh "${sonarqubeScannerHome}/bin/sonar-scanner"
-        		}
-              }
-           }
+          scannerHome = tool 'SonarQube Scanner 2.8'
         }
-     }
-  }
+        withSonarQubeEnv('SonarQube Scanner') {
+        sh "${scannerHome}/bin/sonar-scanner"
+        		}
+          }
+        }
+      }
+    }
   post {
         always {
             echo 'Cleaning the workspace & docker image'
