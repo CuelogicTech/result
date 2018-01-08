@@ -17,16 +17,17 @@ pipeline {
           }
         }
      }
-    stage ('SonarQube Quality Gate') { 
+    stage ('Quality Gate') {
       steps {
       	script {
-      		qualitygate = waitForQualityGate()
+      		def qualitygate = waitForQualityGate()
       		if (qualitygate.status != "OK") {
       			echo "error Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
       		}
       	} 
       }	   
-    }  
+    }
+}
     post {
         always {
             echo 'Cleaning the workspace & docker image'
