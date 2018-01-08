@@ -13,10 +13,9 @@ pipeline {
         }
         withSonarQubeEnv('Sonar') {
         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=cueops -Dsonar.sources=." 
-        		}
+        	}
           }
         }
-     }
     stage ('Quality Gate') {
       steps {
       	script {
@@ -26,8 +25,8 @@ pipeline {
       		}
       	} 
       }	   
-    }
-}
+    }  
+  }
     post {
         always {
             echo 'Cleaning the workspace & docker image'
