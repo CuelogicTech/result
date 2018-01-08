@@ -20,7 +20,7 @@ pipeline {
     stage("SonarQube Quality Gate") { 
       steps {
       	script {
-      		def qualitygate = waitForQualityGate()
+      		qualitygate = waitForQualityGate()
       		if (qualitygate.status != "OK") {
       			echo "error Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
       		}
