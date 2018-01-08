@@ -9,8 +9,9 @@ pipeline {
     stage ("SonarQube analysis") {
      steps {
         script {
-          	sonarqubeScannerHome = tool 'SonarScanner';
+          	def sonarqubeScannerHome = tool 'SonarScanner';
           	}
+        withEnv(["PATH=/usr/bin: ..."]) {
         withSonarQubeEnv("Sonar") {
         sh "${sonarqubeScannerHome}/bin/sonar-scanner"
               }
@@ -24,4 +25,3 @@ pipeline {
             deleteDir() /* clean up our workspace */
      }
   }
-
