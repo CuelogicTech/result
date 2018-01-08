@@ -6,17 +6,15 @@ pipeline {
   }
   
   stages {
-    stage ("SonarQube analysis") {
-     steps {
+    stage ('SonarQube analysis') {
+      steps {
         script {
-          	def sonarqubeScannerHome = tool 'SonarScanner';
-          	}
-        withEnv(["PATH=/usr/bin: ..."]) {
-        withSonarQubeEnv("Sonar") {
-        sh "${sonarqubeScannerHome}/bin/sonar-scanner"
+          scannerHome = tool 'SonarQube Scanner'
+        }
+        withSonarQubeEnv('Sonar') {
+        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=cueops -Dsonar.sources=." 
         		}
-              }
-           }
+          }
         }
      }
     stage("SonarQube Quality Gate") { 
