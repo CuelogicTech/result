@@ -12,7 +12,7 @@ pipeline {
           scannerHome = tool 'SonarQube Scanner'
         }
         withSonarQubeEnv('Sonar') {
-        sh "${scannerHome}/bin/sonar-scanner"
+        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=cueops -Dsonar.sources=." 
         		}
           }
         }
