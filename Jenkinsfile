@@ -17,7 +17,7 @@ pipeline {
           }
         }
      }
-    stage("SonarQube Quality Gate") { 
+    stage('SonarQube Quality Gate') { 
       steps {
       	script {
       		qualitygate = waitForQualityGate()
