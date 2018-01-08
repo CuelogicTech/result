@@ -19,10 +19,20 @@ pipeline {
            }
         }
      }
-  }
-  post {
+    stage("SonarQube Quality Gate") { 
+      steps {
+      	script {
+      		def qualitygate = waitForQualityGate()
+      		if (qualitygate.status != "OK") {
+      			echo "error Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+      		}
+      	} 
+      }	   
+    }  
+    post {
         always {
             echo 'Cleaning the workspace & docker image'
             deleteDir() /* clean up our workspace */
      }
   }
+}
