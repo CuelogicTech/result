@@ -17,10 +17,10 @@ pipeline {
           }
         }
       }
-    }
   post {
         always {
             echo 'Cleaning the workspace & docker image'
             deleteDir() /* clean up our workspace */
      }
   }
+}
