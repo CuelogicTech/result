@@ -18,14 +18,16 @@ pipeline {
         }
     stage ('Quality Gate') {
       steps {
+        timeout(time: 1,unit: 'Hours') {
       	script {
       		def qualitygate = waitForQualityGate()
       		if (qualitygate.status != "OK") {
-      			echo "error Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-      		}
-      	} 
-      }	   
-    }  
+      			error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+      		  }
+      	  } 
+        }	   
+      }  
+    }
   }
     post {
         always {
