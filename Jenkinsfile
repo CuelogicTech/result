@@ -14,6 +14,7 @@ pipeline {
         withEnv(["PATH=/usr/bin: ..."]) {
         withSonarQubeEnv("Sonar") {
         sh "${sonarqubeScannerHome}/bin/sonar-scanner"
+        		}
               }
            }
         }
