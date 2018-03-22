@@ -1,4 +1,2 @@
 # result
 Voteapp sample repo
-
-
