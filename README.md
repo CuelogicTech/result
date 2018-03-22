@@ -4,5 +4,3 @@ Voteapp sample repo
 
 
 
-
-
