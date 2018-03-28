@@ -44,11 +44,12 @@ pipeline {
         }
     }
   }
-  post {
-        always {
-            echo 'Cleaning the workspace & docker image'
-          sh "sudo docker rmi ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
-            deleteDir() /* clean up our workspace */
-     }
-  }
+//  post {
+//        always {
+//            echo 'Cleaning the workspace & docker image'
+//          sh "sudo docker rmi ${env.DOCKERHUB_ORGANIZATION}/${env.JOB_NAME}:${env.GIT_BRANCH}-${env.BUILD_NUMBER}"
+//            deleteDir() /* clean up our workspace */
+//     }
+//  }
 }
+
